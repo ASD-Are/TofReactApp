@@ -1,118 +1,70 @@
-# Real-time Gesture Detector
+# Getting Started with Create React App
 
-This project implements a **Real-time Gesture Detector** using a serial connection to process posture and gesture data. The system interacts with a **NeoCleO board** to fetch prediction data and visualizes it in a user-friendly interface with a gesture display and heatmap.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Features
-- **Real-time Gesture Recognition**:
-  - Recognizes gestures such as `love`, `like`, `dislike`, `flathand`, `CrossHands`, `fist`, and directional gestures like `right`, `left`, `up`, `down`, `tap`, `double tap`, `go away`.
-  - Displays corresponding emojis for detected gestures.
-- **Heatmap Visualization**:
-  - Dynamically updates an 8x8 grid heatmap with numerical data from the serial input.
-- **Interactive UI**:
-  - Provides buttons to connect and disconnect from a serial port.
-  - Visual cues for data collection and processing.
+## Available Scripts
 
-## Setup Instructions
+In the project directory, you can run:
 
-### Step 1: Flash the Binary File to the NeoCleO Board
-1. Download the precompiled binary file containing the gesture prediction model.
-2. Flash the binary to your NeoCleO board using a flashing tool like **ST-LINK Utility** or **STM32CubeProgrammer**.
-   - Ensure the board is configured correctly and connected to your system.
-   - Set the correct COM port and baud rate for communication.
+### `npm start`
 
-### Step 2: Prepare the React Application
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/real-time-gesture-detector.git
-   cd real-time-gesture-detector
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm start
-   ```
-4. Open the app in your browser at [http://localhost:3000](http://localhost:3000).
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## How It Works
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-1. **NeoCleO Board**:
-   - The board processes input data, runs it through the pre-flashed prediction model, and outputs gesture predictions along with a numerical matrix.
-   - Predictions include both gesture labels and raw matrix data, which the UI parses and displays.
+### `npm test`
 
-2. **React UI**:
-   - Connects to the NeoCleO board via the Web Serial API.
-   - Filters and maps gesture predictions to display corresponding emojis.
-   - Dynamically visualizes the 8x8 matrix as a color-coded heatmap.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-## Usage
+### `npm run build`
 
-1. **Flash the Binary**:
-   - Ensure the binary file is flashed to the NeoCleO board.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-2. **Connect to Serial Port**:
-   - Click the **Connect** button to initiate a serial connection.
-   - The app will begin receiving prediction data.
-  
-    ![image](https://github.com/user-attachments/assets/6964e546-fa70-4139-95c0-4bbcf1aceb45)
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-3. **Gesture Detection**:
-   - Detected gestures will be displayed as emojis with a corresponding label.
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-4. **Heatmap Visualization**:
-   - The heatmap updates dynamically with numerical data parsed from the serial input.
+### `npm run eject`
 
-5. **Disconnect Serial Port**:
-   - Click the **Disconnect** button to terminate the serial connection.
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-## Project Structure
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-- **`App.js`**:
-  - Contains the main logic for serial communication, gesture detection, and heatmap rendering.
-- **`EMOJI_MAP`**:
-  - Maps gestures to corresponding emojis for display.
-- **CSS-in-JS**:
-  - Inline styles ensure the UI is visually consistent and responsive.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-## Key Code Components
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Serial Communication
-Uses the Web Serial API to communicate with the NeoCleO board:
-```javascript
-const port = await navigator.serial.requestPort();
-await port.open({ baudRate: 115200 });
-```
+## Learn More
 
-### Gesture Parsing
-Regular expressions identify gestures and map them to corresponding emojis:
-```javascript
-const POSTURE_PATTERN = /Posture\s+=\s+#\d+\s+\{(love|like|dislike|flathand|CrossHands|fist)\}/i;
-const GESTURE_PATTERN = /Gesture\s+(right|left|UP|down|tap|double\s+tap|gw\s+away)/i;
-```
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Heatmap Generation
-Parses 64 numerical values to create an 8x8 heatmap grid:
-```javascript
-const matrix = Array.from({ length: 8 }, (_, i) => numbers.slice(i * 8, i * 8 + 8));
-setHeatmapData(matrix);
-```
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Troubleshooting
-- **Serial connection issues**:
-  - Ensure your browser supports the Web Serial API.
-  - Verify the board is flashed correctly and communicates over the specified baud rate (`115200`).
-- **Data not displaying**:
-  - Ensure the NeoCleO board sends properly formatted data strings.
+### Code Splitting
 
-## Future Enhancements
-- Add support for additional gesture mappings.
-- Provide built-in flashing functionality for easier setup.
-- Extend compatibility for other prediction hardware.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+### Analyzing the Bundle Size
 
-## Acknowledgements
-This project integrates gesture recognition systems using LSTM and 3D CNN technologies, enhanced with visualization tools for real-time applications.
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
